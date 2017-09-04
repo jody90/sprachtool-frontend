@@ -1,0 +1,28 @@
+@import "src/assets/_variables";
+
+.key-edit-container {
+    background: $container-background;
+    padding: $base-padding;
+
+    & .key-edit-form {
+
+        & .key-edit-remove-translation {
+            color: #D71F1A;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        & .key-edit-save-btn {
+            float: right;
+            min-width: 250px;
+        }
+
+        & .add-language-btn {
+            margin-top: 25px;
+        }
+
+    }
+
+}

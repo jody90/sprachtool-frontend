@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+@import "src/assets/_helperDistances";
+@import "src/assets/_bootstrapOverride";
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
+
+body {
+    background-color: #585a5b;
+    background-image: url("./assets/images/45-degree-fabric-light.png");
+    color: #fff;
+}
