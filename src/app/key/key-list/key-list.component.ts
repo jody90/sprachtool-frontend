@@ -11,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class KeyListComponent implements OnInit {
 
     keys: KeyModel [];
-
+    
     constructor(private logSerivce: LogSerivce, private keyService: KeyService) { }
     
     ngOnInit() {
