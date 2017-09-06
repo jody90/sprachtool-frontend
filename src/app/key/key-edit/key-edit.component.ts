@@ -1,19 +1,20 @@
 import { Subscription } from 'rxjs/Rx';
 import { LogSerivce } from './../../services/log.serivce';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, CanDeactivate } from '@angular/router';
 import { NgForm } from '@angular/forms/src/directives';
 import { Translation } from './../translation.model';
 import { TranslateLanguageService } from './../../services/translate-language.service';
 import { KeyModel } from './../key.model';
 import { KeyService } from './../key.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ComponentCanDeactivate } from '../key-edit.guard';
 
 @Component({
     selector: 'app-key-edit',
     templateUrl: './key-edit.component.html',
     styleUrls: ['./key-edit.component.scss']
 })
-export class KeyEditComponent implements OnInit, OnDestroy {
+export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
 
     constructor(
         private logSerivce: LogSerivce,
@@ -29,6 +30,7 @@ export class KeyEditComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     currentKeyId: string;
     render: boolean = false;
+    saved: boolean = false;
 
     ngOnInit() {
         this.subscription = this.activatedRoute.params.subscribe(
@@ -47,6 +49,10 @@ export class KeyEditComponent implements OnInit, OnDestroy {
         );
     }   
 
+    canDeactivate() {
+        
+    }
+
     removeLanguage(language: string) {
         for (let i = 0; i < this.keyModel.translations.length; i++) {
             if (this.keyModel.translations[i].language == language) {
@@ -64,9 +70,7 @@ export class KeyEditComponent implements OnInit, OnDestroy {
 
     saveKey(form: NgForm) {
         this.keyModel.modifiedAt = new Date().getTime();    
-        
-        console.log(this.keyModel.key);
-        console.log(this.currentKeyId);
+
         if (this.currentKeyId == undefined) {
             this.keyService.addKey(this.keyModel);
             this.router.navigate(['translations', 'edit', this.keyModel.key]);
@@ -74,6 +78,9 @@ export class KeyEditComponent implements OnInit, OnDestroy {
         else {
             this.keyService.updateKey(this.currentKeyId, this.keyModel);
         }
+
+        this.saved = true;
+
     }
 
     ngOnDestroy() {

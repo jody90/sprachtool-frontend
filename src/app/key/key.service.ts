@@ -64,4 +64,14 @@ export class KeyService {
         }
     }
 
+    deleteKey(keyId: string) {
+        for (let i = 0; i < this.keys.length; i++) {
+            if (this.keys[i].key == keyId) {
+                this.keys.splice(i, 1);
+                break;
+                // TODO Call Backend
+            }
+        }
+    }
+
 }

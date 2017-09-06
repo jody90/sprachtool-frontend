@@ -1,5 +1,6 @@
+import { KeyDeleteGuard } from './key-delete.guard';
 import { KeyEditComponent } from './key-edit/key-edit.component';
-import { KeyDeleteComponent } from './key-delete/key-delete.component';
+import { KeyDeleteComponent } from './key-delete.component';
 import { Routes } from '@angular/router';
 
 export const KEY_ROUTES: Routes = [
@@ -16,7 +17,8 @@ export const KEY_ROUTES: Routes = [
         component: KeyEditComponent
     },
     {
-        path: 'delete:key',
-        component: KeyDeleteComponent
+        path: 'delete/:id',
+        component: KeyDeleteComponent,
+        canActivate: [KeyDeleteGuard]
     }
 ]

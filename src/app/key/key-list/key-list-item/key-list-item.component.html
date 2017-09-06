@@ -4,7 +4,7 @@
         {{key.key}}
     </div>
     <div class="key-list-action-container">
-        <button class="btn btn-danger">
+        <button class="btn btn-danger" [routerLink]="['delete', key.key]">
                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
         </button>
         <button class="btn btn-warning" [routerLink]="['edit', key.key]">
