@@ -6,7 +6,7 @@ import { Translation } from './../translation.model';
 import { TranslateLanguageService } from './../../services/translate-language.service';
 import { KeyModel } from './../key.model';
 import { KeyService } from './../key.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ComponentCanDeactivate } from '../key-edit.guard';
 
 @Component({
@@ -23,16 +23,31 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
         private activatedRoute: ActivatedRoute,
         private router: Router
     ) { }
+    
+    @ViewChild('form') form;
 
     keyModel: KeyModel;
-    possibleLanguages: string [];
+    possibleLanguages: string[];
     language: string = '';
     subscription: Subscription;
+    formSubscription: Subscription;
     currentKeyId: string;
     render: boolean = false;
     saved: boolean = false;
+    formDirty: boolean;
+
+    ngAfterViewInit() {
+        if (this.form != undefined) {
+            this.formSubscription = this.form.control.valueChanges.subscribe(values => this.formValueChanges(values));
+        }
+    }
+
+    formValueChanges(values) {
+        this.formDirty = this.form.dirty;
+    }
 
     ngOnInit() {
+
         this.subscription = this.activatedRoute.params.subscribe(
             params => {
                 try {
@@ -47,10 +62,16 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
                 }
             }
         );
-    }   
+
+    }
 
     canDeactivate() {
-        
+        if (!this.saved && this.formDirty) {
+            return confirm("Deine Änderungen sind noch nicht gespeichert!");
+        }
+        else {
+            return true;
+        }
     }
 
     removeLanguage(language: string) {
@@ -62,14 +83,14 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
         }
         this.possibleLanguages.push(language);
     }
-    
+
     addLanguage(language: string) {
         this.keyModel.translations.push(new Translation(language, ""));
         this.possibleLanguages.splice(this.possibleLanguages.indexOf(language), 1);
     }
 
     saveKey(form: NgForm) {
-        this.keyModel.modifiedAt = new Date().getTime();    
+        this.keyModel.modifiedAt = new Date().getTime();
 
         if (this.currentKeyId == undefined) {
             this.keyService.addKey(this.keyModel);
@@ -85,6 +106,9 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
+        if (this.formSubscription != undefined) {
+            this.formSubscription.unsubscribe();
+        }
     }
 
 }

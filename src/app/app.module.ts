@@ -1,7 +1,8 @@
+import { KeyEditGuard } from './key/key-edit.guard';
 import { KeyDeleteGuard } from './key/key-delete.guard';
 import { KeyFilterPipe } from './key-filter.pipe';
 import { routing } from './app.routing';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateLanguageService } from './services/translate-language.service';
 import { KeyService } from './key/key.service';
 import { LogSerivce } from './services/log.serivce';
@@ -27,18 +28,20 @@ import { KeyDeleteComponent } from './key/key-delete.component';
         KeyComponent,
         VersionsComponent,
         KeyDeleteComponent,
-        KeyFilterPipe
+        KeyFilterPipe,
     ],
     imports: [
         BrowserModule,
         FormsModule,
-        routing
+        routing,
+        // ReactiveFormsModule
     ],
     providers: [
         LogSerivce,
         KeyService,
         TranslateLanguageService,
-        KeyDeleteGuard
+        KeyDeleteGuard,
+        KeyEditGuard
     ],
     bootstrap: [AppComponent]
 })

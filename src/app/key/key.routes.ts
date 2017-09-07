@@ -1,3 +1,4 @@
+import { KeyEditGuard } from './key-edit.guard';
 import { KeyDeleteGuard } from './key-delete.guard';
 import { KeyEditComponent } from './key-edit/key-edit.component';
 import { KeyDeleteComponent } from './key-delete.component';
@@ -10,11 +11,13 @@ export const KEY_ROUTES: Routes = [
     },
     {
         path: 'edit',
-        redirectTo: ''
+        redirectTo: '',
+        canDeactivate: [KeyEditGuard]
     },
     {
         path: 'edit/:id',
-        component: KeyEditComponent
+        component: KeyEditComponent,
+        canDeactivate: [KeyEditGuard]        
     },
     {
         path: 'delete/:id',
