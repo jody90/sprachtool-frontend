@@ -31,6 +31,7 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
     language: string = '';
     subscription: Subscription;
     formSubscription: Subscription;
+    keySubscription: Subscription;
     currentKeyId: string;
     render: boolean = false;
     saved: boolean = false;
@@ -50,11 +51,17 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
 
         this.subscription = this.activatedRoute.params.subscribe(
             params => {
+                this.keyService.getKeyById(params["id"]);
+                this.currentKeyId = params["id"];
                 try {
-                    this.keyModel = this.keyService.getKeyById(params["id"]);
-                    this.possibleLanguages = this.translateLanguageService.getLanguagesForKey(this.keyModel);
-                    this.currentKeyId = params["id"];
-                    this.render = true;
+                    this.keySubscription = this.keyService.keyEmitter.subscribe(
+                        (data: KeyModel) => {
+                            console.log("jody");
+                            this.keyModel = data
+                            this.possibleLanguages = this.translateLanguageService.getLanguagesForKey(this.keyModel);
+                            this.render = true;
+                        }
+                    )
                 }
                 catch (error) {
                     this.logSerivce.log(error);
@@ -62,6 +69,7 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
                 }
             }
         );
+
 
     }
 
@@ -106,6 +114,7 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
+        this.keySubscription.unsubscribe();
         if (this.formSubscription != undefined) {
             this.formSubscription.unsubscribe();
         }

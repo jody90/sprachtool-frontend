@@ -1,3 +1,5 @@
+import { HttpService } from './services/http.service';
+import { HttpModule } from '@angular/http';
 import { KeyEditGuard } from './key/key-edit.guard';
 import { KeyDeleteGuard } from './key/key-delete.guard';
 import { KeyFilterPipe } from './key-filter.pipe';
@@ -34,6 +36,7 @@ import { KeyDeleteComponent } from './key/key-delete.component';
         BrowserModule,
         FormsModule,
         routing,
+        HttpModule
         // ReactiveFormsModule
     ],
     providers: [
@@ -41,7 +44,8 @@ import { KeyDeleteComponent } from './key/key-delete.component';
         KeyService,
         TranslateLanguageService,
         KeyDeleteGuard,
-        KeyEditGuard
+        KeyEditGuard,
+        HttpService
     ],
     bootstrap: [AppComponent]
 })
