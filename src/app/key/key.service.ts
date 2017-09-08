@@ -10,12 +10,7 @@ export class KeyService {
 
     constructor(private logSerivce: LogSerivce, private httpService: HttpService) { }
 
-    // private keys: KeyModel[] = [
-    //     new KeyModel("jody.test", [new Translation("DE", "Test DE"), new Translation("EN_UK", "Test EN_UK")], new Date().getTime(), new Date().getTime()),
-    //     new KeyModel("jody.hey", [new Translation("DE", "Hey DE"), new Translation("EN_UK", "Hey EN_UK"), new Translation("BE_NL", "Hey BE_NL")], new Date().getTime(), new Date().getTime()),
-    // ];
-
-    private keys: KeyModel[];
+    private keys: KeyModel[] = [];
 
     allKeysEmitter = new EventEmitter();
     keyEmitter = new EventEmitter();
@@ -41,33 +36,28 @@ export class KeyService {
 
     getKeyById(id: string) {
 
-        // var key: KeyModel;
+        let currentTime: number = new Date().getTime();
 
-        // var backendRequest: boolean = true;
+        let key: KeyModel = new KeyModel("", [], currentTime , currentTime);
+        let tTranslations = [];
 
-        // if (id == undefined) {
-        //     console.log("hier");
-        //     backendRequest = false;
-        // }
-        this.keyEmitter.emit(new KeyModel("", [], new Date().getTime(), new Date().getTime()));
+        if (id == undefined) {
+            this.keyEmitter.emit(key);
+            return;
+        }
 
-        // let tTranslations = [];
-        // if (backendRequest) {
-
-        //     this.httpService.getData("/v1/key/" + id).subscribe(
-        //         data => {
-        //             for (let i in data.translations) {
-        //                 tTranslations.push(new Translation(data.translations[i].language, data.translations[i].value));
-        //             }
-        //             key = new KeyModel(data.key, tTranslations, data.createdAt, data.modifiedAt);
-        //             this.keyEmitter.emit(key);
-        //         },
-        //         error => {
-        //             console.log(error)
-        //             throw new Error("No key for ID: " + id + "found");
-        //         }
-        //     )
-        // }
+        this.httpService.getData("/v1/key/" + id).subscribe(
+            data => {
+                for (let i in data[0].translations) {
+                    tTranslations.push(new Translation(data[0].translations[i].language, data[0].translations[i].value));
+                }
+                key = new KeyModel(data[0].key, tTranslations, data[0].createdAt, data[0].modifiedAt);
+                this.keyEmitter.emit(key);
+            },
+            error => {
+                throw new Error("No key for ID: " + id + " found");
+            }
+        )
     }
 
     addKey(key: KeyModel) {
@@ -76,12 +66,10 @@ export class KeyService {
 
         this.keys.push(key);
 
-        this.httpService.sendData('/v1/key/' + key.key, key).subscribe(
+        this.httpService.postData('/v1/key/' + key.key, key).subscribe(
             data => console.log(data),
             error => console.log(error),
         );
-
-        // TODO Call Backend
     }
 
     updateKey(keyId: string, key: KeyModel) {

@@ -6,14 +6,14 @@ import 'rxjs/Rx';
 export class HttpService {
     constructor(private http: Http) { }
 
-    BACKEND_URL: string = "http://127.0.0.1:4000/api";
+    BACKEND_URL: string = "http://127.0.0.1:5000/api";
     HEADERS = new Headers({"Content-Type": "application/json"});
 
     url(part: string) {
         return this.BACKEND_URL + part;
     }
 
-    sendData(path: string, data: any) {
+    postData(path: string, data: any) {
         return this.http.post(this.url(path), JSON.stringify(data), {headers: this.HEADERS});
     }
 

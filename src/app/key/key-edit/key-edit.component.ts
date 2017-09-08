@@ -49,28 +49,26 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
 
     ngOnInit() {
 
+        this.keySubscription = this.keyService.keyEmitter.subscribe(
+            (data: KeyModel) => {
+                this.keyModel = data
+                this.possibleLanguages = this.translateLanguageService.getLanguagesForKey(this.keyModel);
+                this.render = true;
+            }
+        )
+
         this.subscription = this.activatedRoute.params.subscribe(
             params => {
-                this.keyService.getKeyById(params["id"]);
-                this.currentKeyId = params["id"];
                 try {
-                    this.keySubscription = this.keyService.keyEmitter.subscribe(
-                        (data: KeyModel) => {
-                            console.log("jody");
-                            this.keyModel = data
-                            this.possibleLanguages = this.translateLanguageService.getLanguagesForKey(this.keyModel);
-                            this.render = true;
-                        }
-                    )
+                    this.keyService.getKeyById(params["id"]);
+                    this.currentKeyId = params["id"];
                 }
                 catch (error) {
-                    this.logSerivce.log(error);
+                    // this.logSerivce.log(error);
                     this.router.navigate(['translations']);
                 }
             }
         );
-
-
     }
 
     canDeactivate() {
@@ -102,6 +100,8 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
 
         if (this.currentKeyId == undefined) {
             this.keyService.addKey(this.keyModel);
+            this.keyService.getAllKeys();
+            // this.router.navigate(['translations']);
             this.router.navigate(['translations', 'edit', this.keyModel.key]);
         }
         else {
