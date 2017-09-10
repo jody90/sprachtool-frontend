@@ -19,6 +19,11 @@ import { KeyListItemComponent } from './key/key-list/key-list-item/key-list-item
 import { KeyEditComponent } from './key/key-edit/key-edit.component';
 import { VersionsComponent } from './versions/versions.component';
 import { KeyDeleteComponent } from './key/key-delete.component';
+import { VersionService } from './versions/version.service';
+import { VersionNewComponent } from './versions/version-new/version-new.component';
+import { LanguageSelectComponent } from './versions/language-select/language-select.component';
+import { DateFormatComponent } from './versions/date-format.component';
+
 
 @NgModule({
     declarations: [
@@ -31,6 +36,9 @@ import { KeyDeleteComponent } from './key/key-delete.component';
         VersionsComponent,
         KeyDeleteComponent,
         KeyFilterPipe,
+        VersionNewComponent,
+        LanguageSelectComponent,
+        DateFormatComponent
     ],
     imports: [
         BrowserModule,
@@ -45,7 +53,8 @@ import { KeyDeleteComponent } from './key/key-delete.component';
         TranslateLanguageService,
         KeyDeleteGuard,
         KeyEditGuard,
-        HttpService
+        HttpService,
+        VersionService
     ],
     bootstrap: [AppComponent]
 })

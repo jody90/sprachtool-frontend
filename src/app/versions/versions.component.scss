@@ -1,0 +1,26 @@
+.versions-table {
+
+    & .number {
+        width: 2%;
+    }
+
+    & .title {
+        width: 30%;
+    }
+
+    & .createdAt {
+        width: 15%;
+    }
+
+    & .environment {
+        width: 10%;
+    }
+
+    & .actions {
+        text-align: right;
+        // width: 5%;
+        // float: right;
+    }
+
+
+}

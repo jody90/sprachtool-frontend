@@ -1,4 +1,5 @@
 import { KEY_ROUTES } from './key/key.routes';
+import { VERSION_ROUTES } from './versions/version.routes';
 import { VersionsComponent } from './versions/versions.component';
 import { KeyComponent } from './key/key.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -17,7 +18,8 @@ const APP_ROUTES: Routes = [
     },
     {
         path: 'versions',
-        component: VersionsComponent
+        component: VersionsComponent,
+        children: VERSION_ROUTES
     }
 ];
 

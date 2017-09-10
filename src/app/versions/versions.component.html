@@ -1,3 +1,48 @@
-<p>
-  versions works!
-</p>
+<app-version-new></app-version-new>
+
+<div class="table-responsive versions-table">
+
+    <table class="table table-hover">
+        <tr>
+            <th class="number">
+                #
+            </th>
+            <th class="title">
+                Title
+            </th>
+            <th class="createdAt">
+                erstellt am
+            </th>
+            <th class="environment">
+                Zielsystem
+            </th>
+            <th class="text-center">
+                Aktionen
+            </th>
+        </tr>
+        <tr *ngFor="let version of versions; let i = index">
+            <td class="number">
+                {{i}}
+            </td>
+            <td class="title">
+                {{version.title}}
+            </td>
+            <td class="createdAt">
+                <app-date-format [timestamp]="version.createdAt"></app-date-format>
+            </td>
+            <td class="environment">
+                {{version.environment}}
+            </td>
+            <td class="actions">
+                <app-language-select [keys]="version.keys" #language></app-language-select>
+                <button type="button" class="btn btn-primary" (click)="publishVersion(version._id, 'test', language.language)">
+                Version auf Test Veröffentlichen
+            </button>
+                <button type="button" class="btn btn-primary" (click)="publishVersion(version._id, 'live', language.language)">
+                Version auf Live Veröffentlichen
+            </button>
+            </td>
+        </tr>
+    </table>
+
+</div>
