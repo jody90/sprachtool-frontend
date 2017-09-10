@@ -9,19 +9,15 @@ import { AfterViewChecked, AfterViewInit, Component, OnChanges, OnDestroy, OnIni
     templateUrl: './key-list.component.html',
     styleUrls: ['./key-list.component.scss']
 })
-export class KeyListComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
+export class KeyListComponent implements OnInit, OnDestroy {
 
     keys: KeyModel [];
     keysSubscription: Subscription;
 
 
-    constructor(private logSerivce: LogSerivce, private keyService: KeyService) {
-        console.log("constructor")
-     }
+    constructor(private logSerivce: LogSerivce, private keyService: KeyService) { }
     
     ngOnInit() {
-
-        console.log("list on init")
         
         this.keysSubscription = this.keyService.allKeysEmitter.subscribe(
             (data: KeyModel []) => {
@@ -31,18 +27,6 @@ export class KeyListComponent implements OnInit, OnDestroy, OnChanges, AfterView
         
         this.keyService.getAllKeys();
     }
-
-    ngAfterViewInit() {
-        console.log("afterViewInit")
-    }
-
-    ngOnChanges() {
-        console.log("on changes")
-    }
-
-    // ngAfterViewChecked() {
-    //     console.log("afterViewChecked")
-    // }
 
     ngOnDestroy() {
         this.keysSubscription.unsubscribe();

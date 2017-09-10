@@ -17,6 +17,14 @@ export class HttpService {
         return this.http.post(this.url(path), JSON.stringify(data), {headers: this.HEADERS});
     }
 
+    putData(path: string, data: any) {
+        return this.http.put(this.url(path), JSON.stringify(data), {headers: this.HEADERS});
+    }
+
+    deleteData(path: string) {
+        return this.http.delete(this.url(path), {headers: this.HEADERS});
+    }
+
     getData(path: string) {
         return this.http.get(this.url(path), {headers: this.HEADERS})
             .map((response: Response) => {

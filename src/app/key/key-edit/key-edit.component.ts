@@ -25,17 +25,16 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
     ) { }
     
     @ViewChild('form') form;
-
+    
     keyModel: KeyModel;
     possibleLanguages: string[];
     language: string = '';
+    saved: boolean = false;
+    formDirty: boolean;
+    currentKeyId: string;
     subscription: Subscription;
     formSubscription: Subscription;
     keySubscription: Subscription;
-    currentKeyId: string;
-    render: boolean = false;
-    saved: boolean = false;
-    formDirty: boolean;
 
     ngAfterViewInit() {
         if (this.form != undefined) {
@@ -53,7 +52,6 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
             (data: KeyModel) => {
                 this.keyModel = data
                 this.possibleLanguages = this.translateLanguageService.getLanguagesForKey(this.keyModel);
-                this.render = true;
             }
         )
 
@@ -69,15 +67,6 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
                 }
             }
         );
-    }
-
-    canDeactivate() {
-        if (!this.saved && this.formDirty) {
-            return confirm("Deine Änderungen sind noch nicht gespeichert!");
-        }
-        else {
-            return true;
-        }
     }
 
     removeLanguage(language: string) {
@@ -100,24 +89,29 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
 
         if (this.currentKeyId == undefined) {
             this.keyService.addKey(this.keyModel);
-            this.keyService.getAllKeys();
-            // this.router.navigate(['translations']);
-            this.router.navigate(['translations', 'edit', this.keyModel.key]);
         }
         else {
             this.keyService.updateKey(this.currentKeyId, this.keyModel);
         }
-
+        
         this.saved = true;
+        // this.keyService.getAllKeys();
+        this.router.navigate(['translations', 'edit', this.keyModel.key]);
+    }
 
+    canDeactivate() {
+        if (!this.saved && this.formDirty) {
+            return confirm("Deine Änderungen sind noch nicht gespeichert!");
+        }
+        else {
+            return true;
+        }
     }
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
         this.keySubscription.unsubscribe();
-        if (this.formSubscription != undefined) {
-            this.formSubscription.unsubscribe();
-        }
+        this.formSubscription.unsubscribe();
     }
 
 }

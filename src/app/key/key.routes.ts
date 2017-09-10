@@ -7,7 +7,8 @@ import { Routes } from '@angular/router';
 export const KEY_ROUTES: Routes = [
     {
         path: 'new',
-        component: KeyEditComponent
+        component: KeyEditComponent,
+        canDeactivate: [KeyEditGuard]        
     },
     {
         path: 'edit',

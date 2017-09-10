@@ -31,6 +31,7 @@ export class KeyService {
             },
             error => console.log(error)
         )
+        this.keys = tKeys;
         this.allKeysEmitter.emit(tKeys);
     }
 
@@ -46,7 +47,9 @@ export class KeyService {
             return;
         }
 
-        this.httpService.getData("/v1/key/" + id).subscribe(
+        // workaround add query parameter to avoid stalling in chrome
+        this.httpService.getData("/v1/key/" + id + "?no-cache=" + new Date().getTime()).subscribe(
+            
             data => {
                 for (let i in data[0].translations) {
                     tTranslations.push(new Translation(data[0].translations[i].language, data[0].translations[i].value));
@@ -67,29 +70,32 @@ export class KeyService {
         this.keys.push(key);
 
         this.httpService.postData('/v1/key/' + key.key, key).subscribe(
-            data => console.log(data),
+            data =>  {
+                console.log(data)
+                this.getAllKeys();
+            },
             error => console.log(error),
         );
     }
 
     updateKey(keyId: string, key: KeyModel) {
-        for (let i = 0; i < this.keys.length; i++) {
-            if (this.keys[i].key == keyId) {
-                this.keys[i] = key;
-                break;
-                // TODO Call Backend
-            }
-        }
+
+        this.httpService.putData('/v1/key/' + keyId, key).subscribe(
+            data => {
+                this.getAllKeys();
+            },
+            error => console.log(error),
+        );
     }
 
     deleteKey(keyId: string) {
-        for (let i = 0; i < this.keys.length; i++) {
-            if (this.keys[i].key == keyId) {
-                this.keys.splice(i, 1);
-                break;
-                // TODO Call Backend
-            }
-        }
+
+        this.httpService.deleteData('/v1/key/' + keyId).subscribe(
+            data => {
+                this.getAllKeys();
+            },
+            error => console.log(error),
+        );
     }
 
 }
