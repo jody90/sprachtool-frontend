@@ -67,11 +67,8 @@ export class KeyService {
 
         key.key = key.key.toLowerCase();
 
-        this.keys.push(key);
-
         this.httpService.postData('/v1/key/' + key.key, key).subscribe(
             data =>  {
-                console.log(data)
                 this.getAllKeys();
             },
             error => console.log(error),
