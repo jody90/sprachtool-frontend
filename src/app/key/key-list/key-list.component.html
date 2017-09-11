@@ -9,12 +9,28 @@
         </div>
     </div>
 
-    <button class="btn btn-success btn-block margin-bottom-lg"  [routerLink]="['new']">
+    <div class="row">
+        <div class="col-xs-12 margin-bottom-md">
+            <strong>
+                Fehlende Übersetzungen filtern
+            </strong>
+        </div>
+        <div class="col-xs-12 language-filter-list-container margin-bottom-lg">
+            <button *ngFor="let lang of languages" type="button" [ngClass]="selectedLanguage == lang ? 'active' : ''" class="btn language-filter-btn" (click)="selectedLanguage(lang)">
+                {{lang}}
+            </button>
+            <button type="button" class="btn language-filter-remove-btn btn-block" (click)="filterLanguage(false)">
+                Filter entfernen
+            </button>
+        </div>
+    </div>
+
+    <button class="btn btn-success btn-block margin-bottom-lg" [routerLink]="['new']">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         Neuen Sprachkey erstellen
     </button>
 
     <ul class="key-list">
-        <app-key-list-item *ngFor="let key of keys | keyFilter:keySearchValue.value" [key]="key"></app-key-list-item>
+        <app-key-list-item *ngFor="let key of keys | keyFilter : [selectedLanguage, keySearchValue.value]" [key]="key"></app-key-list-item>
     </ul>
 </div>

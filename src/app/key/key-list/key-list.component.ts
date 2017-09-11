@@ -1,8 +1,9 @@
+import { TranslateLanguageService } from './../../services/translate-language.service';
 import { Subscription } from 'rxjs/Rx';
 import { KeyService } from './../key.service';
 import { LogSerivce } from './../../services/log.serivce';
 import { KeyModel } from './../key.model';
-import { AfterViewChecked, AfterViewInit, Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-key-list',
@@ -13,19 +14,25 @@ export class KeyListComponent implements OnInit, OnDestroy {
 
     keys: KeyModel [];
     keysSubscription: Subscription;
+    languages;
+    selectedLanguage: string;
 
 
-    constructor(private logSerivce: LogSerivce, private keyService: KeyService) { }
+    constructor(private logSerivce: LogSerivce, private keyService: KeyService, private translateLanguageService: TranslateLanguageService) { }
     
     ngOnInit() {
         
         this.keysSubscription = this.keyService.allKeysEmitter.subscribe(
             (data: KeyModel []) => {
-                this.keys = data
+                this.keys = data;
             }
         )
-        
+        this.languages = this.translateLanguageService.getAllLanguages();
         this.keyService.getAllKeys();
+    }
+
+    filterLanguage(lang: string) {
+        this.selectedLanguage = lang;
     }
 
     ngOnDestroy() {

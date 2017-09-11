@@ -17,12 +17,12 @@ export class KeyService {
 
     getAllKeys() {
 
-        let tTranslations = [];
         var tKeys = [];
-
+        
         this.httpService.getData("/v1/keys").subscribe(
             data => {
                 for (let item of data) {
+                    let tTranslations = [];
                     for (let i in item.translations) {
                         tTranslations.push(new Translation(item.translations[i].language, item.translations[i].value));
                     }
