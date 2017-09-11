@@ -16,7 +16,7 @@
             </strong>
         </div>
         <div class="col-xs-12 language-filter-list-container margin-bottom-lg">
-            <button *ngFor="let lang of languages" type="button" [ngClass]="selectedLanguage == lang ? 'active' : ''" class="btn language-filter-btn" (click)="selectedLanguage(lang)">
+            <button *ngFor="let lang of languages" type="button" [ngClass]="selectedLanguage == lang ? 'active' : ''" class="btn language-filter-btn" (click)="filterLanguage(lang)">
                 {{lang}}
             </button>
             <button type="button" class="btn language-filter-remove-btn btn-block" (click)="filterLanguage(false)">

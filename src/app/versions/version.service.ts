@@ -33,11 +33,9 @@ export class VersionService {
             language: language
         };
 
-        console.log(data);
-
         this.httpService.postData("/v1/version/publish/", data).subscribe(
             data => {
-                // this.getAllVersions();
+                this.getAllVersions();
             },
             error => console.log(error)
         )

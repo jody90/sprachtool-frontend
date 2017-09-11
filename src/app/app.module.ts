@@ -1,3 +1,4 @@
+import { EnvironmentsPipe } from './environments.pipe';
 import { HttpService } from './services/http.service';
 import { HttpModule } from '@angular/http';
 import { KeyEditGuard } from './key/key-edit.guard';
@@ -38,7 +39,8 @@ import { DateFormatComponent } from './versions/date-format.component';
         KeyFilterPipe,
         VersionNewComponent,
         LanguageSelectComponent,
-        DateFormatComponent
+        DateFormatComponent,
+        EnvironmentsPipe
     ],
     imports: [
         BrowserModule,
