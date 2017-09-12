@@ -1,4 +1,4 @@
-FROM node:boron
+FROM node:6
 
 # Create a directory where our app will be placed
 RUN mkdir -p /usr/src/app
@@ -7,7 +7,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # For npm@5 or later, copy package-lock.json as well
-COPY package.json package-lock.json /usr/src/app
+COPY package.json package-lock.json /usr/src/app/
 
 RUN npm install
 
@@ -15,5 +15,3 @@ RUN npm install
 COPY . /usr/src/app
 
 EXPOSE 4200
-
-CMD [ "npm", "start" ]
