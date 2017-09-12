@@ -19,7 +19,7 @@
             <button *ngFor="let lang of languages" type="button" [ngClass]="selectedLanguage == lang ? 'active' : ''" class="btn language-filter-btn" (click)="filterLanguage(lang)">
                 {{lang}}
             </button>
-            <button type="button" class="btn language-filter-remove-btn btn-block" (click)="filterLanguage(false)">
+            <button type="button" class="btn language-filter-remove-btn btn-block" (click)="filterLanguage('false')">
                 Filter entfernen
             </button>
         </div>
