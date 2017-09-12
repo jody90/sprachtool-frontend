@@ -14,7 +14,8 @@ export class KeyListComponent implements OnInit, OnDestroy {
 
     keys: KeyModel [];
     keysSubscription: Subscription;
-    languages;
+    languagesSubscription: Subscription;
+    languages: string [];
     selectedLanguage: string;
 
 
@@ -27,7 +28,13 @@ export class KeyListComponent implements OnInit, OnDestroy {
                 this.keys = data;
             }
         )
-        this.languages = this.translateLanguageService.getAllLanguages();
+        
+        this.languagesSubscription = this.translateLanguageService.allLanguagesEmitter.subscribe(
+            data => this.languages = data,
+            error => console.log(error)
+        )
+        
+        this.translateLanguageService.getAllLanguages();
         this.keyService.getAllKeys();
     }
 
@@ -37,6 +44,7 @@ export class KeyListComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.keysSubscription.unsubscribe();
+        this.languagesSubscription.unsubscribe();
     }
 
 }

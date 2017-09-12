@@ -21,13 +21,13 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
         private keyService: KeyService,
         private translateLanguageService: TranslateLanguageService,
         private activatedRoute: ActivatedRoute,
-        private router: Router
+        private router: Router,
     ) { }
     
     @ViewChild('form') form;
     
     keyModel: KeyModel;
-    possibleLanguages: string[];
+    possibleLanguages: string[] = [];
     language: string = '';
     saved: boolean = false;
     formDirty: boolean;
@@ -35,6 +35,7 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
     subscription: Subscription;
     formSubscription: Subscription;
     keySubscription: Subscription;
+    languagesSubscription: Subscription;
 
     ngAfterViewInit() {
         if (this.form != undefined) {
@@ -51,7 +52,12 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
         this.keySubscription = this.keyService.keyEmitter.subscribe(
             (data: KeyModel) => {
                 this.keyModel = data
-                this.possibleLanguages = this.translateLanguageService.getLanguagesForKey(this.keyModel);
+                this.translateLanguageService.getAllLanguages();
+                this.languagesSubscription = this.translateLanguageService.allLanguagesEmitter.subscribe(
+                    languages => this.possibleLanguages = this.translateLanguageService.getLanguagesForKey(data, languages),
+                    error => console.log(error)
+                )
+                
             }
         )
 
@@ -112,6 +118,7 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
         this.subscription.unsubscribe();
         this.keySubscription.unsubscribe();
         this.formSubscription.unsubscribe();
+        this.languagesSubscription.unsubscribe();
     }
 
 }

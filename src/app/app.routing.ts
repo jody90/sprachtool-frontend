@@ -1,3 +1,4 @@
+import { AdminComponent } from './admin/admin.component';
 import { KEY_ROUTES } from './key/key.routes';
 import { VERSION_ROUTES } from './versions/version.routes';
 import { VersionsComponent } from './versions/versions.component';
@@ -20,6 +21,10 @@ const APP_ROUTES: Routes = [
         path: 'versions',
         component: VersionsComponent,
         children: VERSION_ROUTES
+    },
+    {
+        path: 'admin',
+        component: AdminComponent
     }
 ];
 

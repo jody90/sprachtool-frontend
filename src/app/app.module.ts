@@ -24,6 +24,8 @@ import { VersionService } from './versions/version.service';
 import { VersionNewComponent } from './versions/version-new/version-new.component';
 import { LanguageSelectComponent } from './versions/language-select/language-select.component';
 import { DateFormatComponent } from './versions/date-format.component';
+import { AdminComponent } from './admin/admin.component';
+import { LanguagesComponent } from './admin/languages/languages.component';
 
 
 @NgModule({
@@ -40,7 +42,9 @@ import { DateFormatComponent } from './versions/date-format.component';
         VersionNewComponent,
         LanguageSelectComponent,
         DateFormatComponent,
-        EnvironmentsPipe
+        EnvironmentsPipe,
+        AdminComponent,
+        LanguagesComponent
     ],
     imports: [
         BrowserModule,

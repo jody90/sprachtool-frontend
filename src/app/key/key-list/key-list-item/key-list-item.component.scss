@@ -6,7 +6,8 @@
     border-color: #ffffff;
     margin: 5px;
 
-    &:hover {
+    &:hover,
+    &.active {
         background-color: rgba(2, 18, 29, 0.8);
     }
 
