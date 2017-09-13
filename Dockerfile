@@ -1,17 +1,34 @@
-FROM node:6
+### STAGE 1: Build ###
 
-# Create a directory where our app will be placed
-RUN mkdir -p /usr/src/app
+# We label our stage as 'builder'
+FROM node:6 as builder
 
-# Change directory so that our commands run inside this new directory
-WORKDIR /usr/src/app
+COPY package.json package-lock.json ./
 
-# For npm@5 or later, copy package-lock.json as well
-COPY package.json package-lock.json /usr/src/app/
+RUN npm set progress=false && npm config set depth 0 && npm cache clean --force
 
-RUN npm install
+## Storing node modules on a separate layer will prevent unnecessary npm installs at each build
+RUN npm i && mkdir /ng-app && cp -R ./node_modules ./ng-app
 
-# Get all the code needed to run the app
-COPY . /usr/src/app
+WORKDIR /ng-app
 
-EXPOSE 4200
+COPY . .
+
+## Build the angular app in production mode and store the artifacts in dist folder
+RUN $(npm bin)/ng build --prod --build-optimizer
+
+
+### STAGE 2: Setup ###
+
+FROM nginx:1.13.3-alpine
+
+## Copy our default nginx config
+COPY nginx/default.conf /etc/nginx/conf.d/
+
+## Remove default nginx website
+RUN rm -rf /usr/share/nginx/html/*
+
+## From 'builder' stage copy over the artifacts in dist folder to default nginx public folder
+COPY --from=builder /ng-app/dist /usr/share/nginx/html
+
+CMD ["nginx", "-g", "daemon off;"]
