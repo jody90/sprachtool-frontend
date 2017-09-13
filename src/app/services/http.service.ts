@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import 'rxjs/Rx';
@@ -6,11 +7,11 @@ import 'rxjs/Rx';
 export class HttpService {
     constructor(private http: Http) { }
 
-    BACKEND_URL: string = "http://zuscodeninja1.sortimo.de:5000/api";
+    // BACKEND_URL: string = "http://zuscodeninja1.sortimo.de:5000/api";
     HEADERS = new Headers({"Content-Type": "application/json"});
 
     url(part: string) {
-        return this.BACKEND_URL + part;
+        return environment.apiUrl + part;
     }
 
     postData(path: string, data: any) {
