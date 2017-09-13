@@ -6,7 +6,7 @@ import 'rxjs/Rx';
 export class HttpService {
     constructor(private http: Http) { }
 
-    BACKEND_URL: string = "http://127.0.0.1:5000/api";
+    BACKEND_URL: string = "http://zuscodeninja1.sortimo.de:5000/api";
     HEADERS = new Headers({"Content-Type": "application/json"});
 
     url(part: string) {
