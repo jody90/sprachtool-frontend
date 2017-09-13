@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiUrl : "http://zuscodeninja1.sortimo.de:5000/api"
+  apiUrl : "http://localhost:5000/api"
 };
