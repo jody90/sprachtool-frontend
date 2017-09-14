@@ -10,8 +10,6 @@ export class KeyService {
 
     constructor(private logSerivce: LogSerivce, private httpService: HttpService) { }
 
-    private keys: KeyModel[] = [];
-
     allKeysEmitter = new EventEmitter();
     keyEmitter = new EventEmitter();
 
@@ -21,18 +19,21 @@ export class KeyService {
         
         this.httpService.getData("/v1/keys").subscribe(
             data => {
+                var counter = 0;
                 for (let item of data) {
                     let tTranslations = [];
                     for (let i in item.translations) {
                         tTranslations.push(new Translation(item.translations[i].language, item.translations[i].value));
                     }
                     tKeys.push(new KeyModel(item.key, tTranslations, item.createdAt, item.modifiedAt));
+                    
+                    if (tKeys.length == data.length) {
+                        this.allKeysEmitter.emit(data);
+                    }
                 }
             },
             error => console.log(error)
         )
-        this.keys = tKeys;
-        this.allKeysEmitter.emit(tKeys);
     }
 
     getKeyById(id: string) {

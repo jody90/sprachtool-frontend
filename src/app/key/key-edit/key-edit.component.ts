@@ -23,9 +23,9 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
         private activatedRoute: ActivatedRoute,
         private router: Router,
     ) { }
-    
+
     @ViewChild('form') form;
-    
+
     keyModel: KeyModel;
     possibleLanguages: string[] = [];
     language: string = '';
@@ -57,7 +57,7 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
                     languages => this.possibleLanguages = this.translateLanguageService.getLanguagesForKey(data, languages),
                     error => console.log(error)
                 )
-                
+
             }
         )
 
@@ -99,7 +99,7 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
         else {
             this.keyService.updateKey(this.currentKeyId, this.keyModel);
         }
-        
+
         this.saved = true;
         // this.keyService.getAllKeys();
         this.router.navigate(['translations', 'edit', this.keyModel.key]);

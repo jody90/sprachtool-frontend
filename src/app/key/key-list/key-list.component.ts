@@ -12,7 +12,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 })
 export class KeyListComponent implements OnInit, OnDestroy {
 
-    keys: KeyModel [];
+    keys: KeyModel [] = [];
     keysSubscription: Subscription;
     languagesSubscription: Subscription;
     languages: string [];

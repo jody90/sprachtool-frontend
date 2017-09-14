@@ -1,3 +1,4 @@
+import { NgxPaginationModule } from 'ngx-pagination';
 import { EnvironmentsPipe } from './environments.pipe';
 import { HttpService } from './services/http.service';
 import { HttpModule } from '@angular/http';
@@ -50,7 +51,8 @@ import { LanguagesComponent } from './admin/languages/languages.component';
         BrowserModule,
         FormsModule,
         routing,
-        HttpModule
+        HttpModule,
+        NgxPaginationModule
         // ReactiveFormsModule
     ],
     providers: [

@@ -5,16 +5,17 @@
     border-bottom: 1px solid;
     border-color: #ffffff;
     margin: 5px;
-
+    
     &:hover,
     &.active {
         background-color: rgba(2, 18, 29, 0.8);
     }
-
+    
     & .key-list-item-name {
         display: inline-block;
         padding: 7px;
         font-size: 16px;
+        word-break: break-all;
     }
 
     & .key-list-action-container {

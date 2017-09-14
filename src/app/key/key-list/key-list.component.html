@@ -31,6 +31,9 @@
     </button>
 
     <ul class="key-list">
-        <app-key-list-item *ngFor="let key of keys | keyFilter : [selectedLanguage, keySearchValue.value]" [key]="key"></app-key-list-item>
+        <app-key-list-item *ngFor="let key of keys | keyFilter : [selectedLanguage, keySearchValue.value] | paginate: { itemsPerPage: 7, currentPage: p }" [key]="key"></app-key-list-item>
+        <div class="my-pagination-container margin-top-xl">
+            <pagination-controls (pageChange)="p = $event" autoHide="true" previousLabel="vorherige Seite" nextLabel="nächste Seite" maxSize="5" class="my-pagination"></pagination-controls>
+        </div>
     </ul>
 </div>
