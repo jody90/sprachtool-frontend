@@ -11,8 +11,6 @@ export class KeyListItemComponent implements OnInit {
 
     @Input() key: KeyModel;
 
-    p: number = 1;
-
     ngOnInit() {
     }
 

@@ -17,7 +17,8 @@ export class KeyListComponent implements OnInit, OnDestroy {
     languagesSubscription: Subscription;
     languages: string [];
     selectedLanguage: string;
-
+    p: number = 1;
+    
     constructor(private logSerivce: LogSerivce, private keyService: KeyService, private translateLanguageService: TranslateLanguageService) { }
     
     ngOnInit() {

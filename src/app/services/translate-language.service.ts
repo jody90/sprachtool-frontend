@@ -19,7 +19,6 @@ export class TranslateLanguageService {
     }
 
     addLanguage(lang: string) {
-        console.log(lang);
         this.httpService.postData("/v1/language/" + lang, {language: lang}).subscribe(
             data => {
                 this.getAllLanguages();
