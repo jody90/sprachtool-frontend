@@ -6,12 +6,25 @@
 
     & .key-edit-form {
 
+        & .need-update {
+            background-color: rgba(225, 41, 9, 0.3);
+            color: #ffffff;          
+        }
+
         & .key-edit-remove-translation {
             color: #D71F1A;
             cursor: pointer;
             font-size: 16px;
             margin-left: 10px;
-            vertical-align: middle;
+            vertical-align: text-bottom;
+        }
+
+        & .key-edit-check-translation {
+            color: #2FB311;
+            cursor: pointer;
+            font-size: 20px;
+            margin-left: 10px;
+            vertical-align: text-bottom;
         }
 
         & .key-edit-save-btn {

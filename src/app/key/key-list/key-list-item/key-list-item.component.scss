@@ -28,4 +28,8 @@
             padding-bottom: 7px;
         }
     }
+
+    &.need-update {
+        background-color: rgba(225, 41, 9, 0.3);
+    }
 }

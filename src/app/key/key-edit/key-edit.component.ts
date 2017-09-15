@@ -109,6 +109,34 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
         this.keyModel.translations[translationIndex].modifiedAt = new Date().getTime();
     }
 
+    needTranslationUpdate(language: string) {
+
+        let translations = this.keyModel.translations;
+        
+        var tempLanguages = {}
+        for (let i in translations) {
+            tempLanguages[translations[i].language] = translations[i].modifiedAt;
+        }
+
+        if (tempLanguages["de"] !== undefined) {
+            if (tempLanguages["de"] > tempLanguages[language]) {
+                return true
+            }
+        }
+
+        return false;
+    }
+
+    checkTranslation(language: string) {
+        for (let i in this.keyModel.translations) {
+            if (this.keyModel.translations[i].language == language) {
+                this.keyModel.translations[i].modifiedAt = new Date().getTime();
+                this.keyService.updateKey(this.keyModel.key, this.keyModel);
+                break;
+            }
+        }
+    }
+
     canDeactivate() {
         if (!this.saved && this.formDirty) {
             return confirm("Deine Änderungen sind noch nicht gespeichert!");

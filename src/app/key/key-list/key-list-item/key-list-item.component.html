@@ -1,4 +1,4 @@
-<li class="key-list-item" routerLinkActive="active">
+<li class="key-list-item" routerLinkActive="active" [ngClass]="needTranslationUpdate(key.translations) ? 'need-update' : ''">
     <div class="key-list-item-name">
         {{key.key}}
     </div>

@@ -1,3 +1,4 @@
+import { Translation } from './../key/translation.model';
 import { HttpService } from './http.service';
 import { EventEmitter, Injectable } from '@angular/core';
 import { KeyModel } from './../key/key.model';
