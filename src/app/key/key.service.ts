@@ -23,7 +23,7 @@ export class KeyService {
                 for (let item of data) {
                     let tTranslations = [];
                     for (let i in item.translations) {
-                        tTranslations.push(new Translation(item.translations[i].language, item.translations[i].value));
+                        tTranslations.push(new Translation(item.translations[i].language, item.translations[i].value, item.translations[i].modifiedAt));
                     }
                     tKeys.push(new KeyModel(item.key, tTranslations, item.createdAt, item.modifiedAt));
                     
@@ -53,7 +53,7 @@ export class KeyService {
             
             data => {
                 for (let i in data[0].translations) {
-                    tTranslations.push(new Translation(data[0].translations[i].language, data[0].translations[i].value));
+                    tTranslations.push(new Translation(data[0].translations[i].language, data[0].translations[i].value, data[0].translations[i].modifiedAt));
                 }
                 key = new KeyModel(data[0].key, tTranslations, data[0].createdAt, data[0].modifiedAt);
                 this.keyEmitter.emit(key);

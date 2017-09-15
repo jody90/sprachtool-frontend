@@ -86,7 +86,7 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
     }
 
     addLanguage(language: string) {
-        this.keyModel.translations.push(new Translation(language, ""));
+        this.keyModel.translations.push(new Translation(language, "", new Date().getTime()));
         this.possibleLanguages.splice(this.possibleLanguages.indexOf(language), 1);
     }
 
@@ -103,6 +103,10 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
         this.saved = true;
         // this.keyService.getAllKeys();
         this.router.navigate(['translations', 'edit', this.keyModel.key]);
+    }
+
+    translationChanged(translationIndex: number) {
+        this.keyModel.translations[translationIndex].modifiedAt = new Date().getTime();
     }
 
     canDeactivate() {
