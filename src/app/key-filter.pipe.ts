@@ -29,6 +29,14 @@ export class KeyFilterPipe implements PipeTransform {
             }
 
             if (query && !language) {
+
+                for (let i in item.translations) {
+                    var value = item.translations[i].value != null ? item.translations[i].value : [];
+                    if (item.key.indexOf(query) !== -1 || value.indexOf(query) !== -1) {
+                        return item;
+                    }
+                }
+
                 if (item.key.indexOf(query) !== -1) {
                     return item
                 }
