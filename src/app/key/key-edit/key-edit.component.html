@@ -22,7 +22,7 @@
                     <div class="col-xs-11">
                         <div class="form-group">
                             <label for="{{translation.language}}">
-                                Übersetztung {{translation.language}}
+                                Translation {{translation.language}}
                                 <span class="glyphicon glyphicon-trash key-edit-remove-translation" aria-hidden="true" (click)="removeLanguage(translation.language)"></span>
                                 <span class="glyphicon glyphicon-check key-edit-check-translation" aria-hidden="true" *ngIf="needTranslationUpdate(translation.language)" (click)="checkTranslation(translation.language)"></span>
                             </label>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-xs-9 padding-0 add-language-btn-container">
                     <button type="button" class="btn btn-primary btn-block add-language-btn" (click)="addLanguage(languageSelect.value)">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Sprache hinzufügen
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> add Language
                     </button>
                 </div>
             </div>
@@ -49,7 +49,7 @@
         
         <button type="submit" class="btn btn-success key-edit-save-btn margin-top-lg margin-bottom-lg" [disabled]="!form.valid">
             <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-            Speichern
+            Save
         </button>
         <div style="clear: both;"></div>
     </form>

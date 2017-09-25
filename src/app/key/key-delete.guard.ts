@@ -3,6 +3,6 @@ import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angul
 
 export class KeyDeleteGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-        return confirm("Bist du sicher dass du diesen Key löschen willst?");
+        return confirm("Do you really want to delete this Key. Please tell me what you want!");
     }
 }

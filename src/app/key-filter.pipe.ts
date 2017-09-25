@@ -8,7 +8,7 @@ export class KeyFilterPipe implements PipeTransform {
     transform(items: any[], args:string[]): any {
 
         var language:string = args[0];
-        var query:string = args[1];
+        var query:string = args[1].toLowerCase() || undefined;
 
         if (!items || (!language && !query)) {
             return items;
@@ -19,11 +19,23 @@ export class KeyFilterPipe implements PipeTransform {
             if (language && !query) {
                 var tTrans = [];
 
+                var modifiedDe;
+                var modifiedOther;
+                
                 for (let i in item.translations) {
+                    
+                    if (item.translations[i].language == "de") {
+                        modifiedDe = item.translations[i].modifiedAt;
+                    }
+
+                    if (item.translations[i].language == language) {
+                        modifiedOther = item.translations[i].modifiedAt;
+                    }
+
                     tTrans.push(item.translations[i].language);
                 }
                 
-                if (tTrans.indexOf(language) == -1) {
+                if (tTrans.indexOf(language) == -1 || modifiedDe > modifiedOther) {
                     return item;
                 }
             }
@@ -31,13 +43,13 @@ export class KeyFilterPipe implements PipeTransform {
             if (query && !language) {
 
                 for (let i in item.translations) {
-                    var value = item.translations[i].value != null ? item.translations[i].value : [];
-                    if (item.key.indexOf(query) !== -1 || value.indexOf(query) !== -1) {
+                    var value = item.translations[i].value != null ? item.translations[i].value.toLowerCase() : [];
+                    if (item.key.toLowerCase().indexOf() !== -1 || value.indexOf(query) !== -1) {
                         return item;
                     }
                 }
 
-                if (item.key.indexOf(query) !== -1) {
+                if (item.key.toLowerCase().indexOf(query) !== -1) {
                     return item
                 }
             }

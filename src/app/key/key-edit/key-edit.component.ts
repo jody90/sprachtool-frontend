@@ -30,7 +30,7 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
     possibleLanguages: string[] = [];
     language: string = '';
     saved: boolean = false;
-    formDirty: boolean;
+    formDirty: boolean = false;
     currentKeyId: string;
     subscription: Subscription;
     formSubscription: Subscription;
@@ -39,12 +39,16 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
 
     ngAfterViewInit() {
         if (this.form != undefined) {
-            this.formSubscription = this.form.control.valueChanges.subscribe(values => this.formValueChanges(values));
+            this.formSubscription = this.form.control.valueChanges.debounceTime(200).distinctUntilChanged().subscribe(values => {
+                this.formValueChanges(values)
+            });
         }
     }
 
     formValueChanges(values) {
-        this.formDirty = this.form.dirty;
+        if (!this.form.pristine) {
+            this.formDirty = this.form.dirty;
+        }
     }
 
     ngOnInit() {
@@ -57,13 +61,14 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
                     languages => this.possibleLanguages = this.translateLanguageService.getLanguagesForKey(data, languages),
                     error => console.log(error)
                 )
-
+                
             }
         )
-
+        
         this.subscription = this.activatedRoute.params.subscribe(
             params => {
                 try {
+                    this.form.reset();
                     this.keyService.getKeyById(params["id"]);
                     this.currentKeyId = params["id"];
                 }
@@ -138,8 +143,15 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
     }
 
     canDeactivate() {
+
         if (!this.saved && this.formDirty) {
-            return confirm("Deine Änderungen sind noch nicht gespeichert!");
+
+            if (confirm("Your changes are not already saved! Press OK if you want to discard your changes. Otherwise press ABORT and save your changes")) {
+                this.formDirty = false;
+                return true;
+            }
+
+            return false;
         }
         else {
             return true;
