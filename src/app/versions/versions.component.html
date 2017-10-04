@@ -11,18 +11,18 @@
                 Title
             </th>
             <th class="createdAt">
-                erstellt am
+                Created at
             </th>
             <th class="environment text-center">
-                Zielsystem
+                Target System
             </th>
             <th class="text-center">
-                Aktionen
+                Actions
             </th>
         </tr>
         <tr *ngFor="let version of versions; let i = index">
             <td class="number">
-                {{i}}
+                {{versions.length - i}}
             </td>
             <td class="title">
                 {{version.title}}
@@ -45,10 +45,10 @@
             <td class="actions">
                 <app-language-select [keys]="version.keys" #language></app-language-select>
                 <button type="button" class="btn btn-primary" (click)="publishVersion(version._id, 'test', language.language)">
-                Version auf Test Veröffentlichen
+                Publish on Test
             </button>
                 <button type="button" class="btn btn-primary" (click)="publishVersion(version._id, 'live', language.language)">
-                Version auf Live Veröffentlichen
+                Publish on Live
             </button>
             </td>
         </tr>
