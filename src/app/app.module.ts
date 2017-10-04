@@ -27,6 +27,7 @@ import { LanguageSelectComponent } from './versions/language-select/language-sel
 import { DateFormatComponent } from './versions/date-format.component';
 import { AdminComponent } from './admin/admin.component';
 import { LanguagesComponent } from './admin/languages/languages.component';
+import { VersionCompareComponent } from './versions/version-compare/version-compare.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { LanguagesComponent } from './admin/languages/languages.component';
         DateFormatComponent,
         EnvironmentsPipe,
         AdminComponent,
-        LanguagesComponent
+        LanguagesComponent,
+        VersionCompareComponent
     ],
     imports: [
         BrowserModule,

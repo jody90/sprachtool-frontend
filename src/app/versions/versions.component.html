@@ -16,6 +16,9 @@
             <th class="environment text-center">
                 Target System
             </th>
+            <!-- <th>
+                Compare Versions
+            </th> -->
             <th class="text-center">
                 Actions
             </th>
@@ -42,14 +45,17 @@
                     </span>
                 </div>
             </td>
+            <!-- <td>
+                <app-version-compare [versions]="versions" [ownVersion]="version"></app-version-compare>
+            </td> -->
             <td class="actions">
                 <app-language-select [keys]="version.keys" #language></app-language-select>
                 <button type="button" class="btn btn-primary" (click)="publishVersion(version._id, 'test', language.language)">
-                Publish on Test
-            </button>
+                    Publish on Test
+                </button>
                 <button type="button" class="btn btn-primary" (click)="publishVersion(version._id, 'live', language.language)">
-                Publish on Live
-            </button>
+                    Publish on Live
+                </button>
             </td>
         </tr>
     </table>
