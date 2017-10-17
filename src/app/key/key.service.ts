@@ -66,7 +66,7 @@ export class KeyService {
 
     addKey(key: KeyModel) {
 
-        key.key = key.key.toLowerCase();
+        // key.key = key.key.toLowerCase();
 
         this.httpService.postData('/v1/key/' + key.key, key).subscribe(
             data =>  {
