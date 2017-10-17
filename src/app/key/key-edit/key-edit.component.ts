@@ -58,7 +58,7 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
                 this.keyModel = data
                 this.translateLanguageService.getAllLanguages();
                 this.languagesSubscription = this.translateLanguageService.allLanguagesEmitter.subscribe(
-                    languages => this.possibleLanguages = this.translateLanguageService.getLanguagesForKey(data, languages),
+                    languages => this.possibleLanguages = this.translateLanguageService.getLanguagesForKey(data, languages).sort(),
                     error => console.log(error)
                 )
                 

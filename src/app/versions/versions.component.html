@@ -10,6 +10,9 @@
             <th class="title">
                 Title
             </th>
+            <th class="description">
+                Description
+            </th>
             <th class="createdAt">
                 Created at
             </th>
@@ -29,6 +32,17 @@
             </td>
             <td class="title">
                 {{version.title}}
+            </td>
+            <td class="description">
+                <!-- <div class="description-text"> -->
+                <!-- <perfect-scrollbar class="container" [config]="config">
+                    <div class="content">
+                        {{version.description}} {{version.description}} {{version.description}} {{version.description}} {{version.description}} {{version.description}}
+                        {{version.description}}
+                    </div>
+                </perfect-scrollbar> -->
+
+                <!-- </div> -->
             </td>
             <td class="createdAt">
                 <app-date-format [timestamp]="version.createdAt"></app-date-format>
