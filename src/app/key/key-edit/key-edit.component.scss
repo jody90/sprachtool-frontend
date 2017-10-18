@@ -6,6 +6,10 @@
 
     & .key-edit-form {
 
+        & .translation-form-group {
+            min-height: 105px;
+        }
+
         & .need-update {
             background-color: rgba(225, 41, 9, 0.3);
             color: #ffffff;          

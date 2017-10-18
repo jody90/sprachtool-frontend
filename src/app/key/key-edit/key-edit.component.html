@@ -20,7 +20,7 @@
             <div class="col-xs-6" *ngFor="let translation of keyModel.translations; let tIndex = index">
                 <div class="row">
                     <div class="col-xs-11">
-                        <div class="form-group">
+                        <div class="form-group translation-form-group">
                             <label for="{{translation.language}}">
                                 Translation {{translation.language}}
                                 <span class="glyphicon glyphicon-trash key-edit-remove-translation" aria-hidden="true" (click)="removeLanguage(translation.language)"></span>
