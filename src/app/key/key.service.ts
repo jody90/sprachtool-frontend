@@ -39,8 +39,6 @@ export class KeyService {
 
     keyExist(id: string) {
 
-        console.log("keyExist called");
-
         // workaround add query parameter to avoid stalling in chrome
         this.httpService.getData("/v1/key/exist/" + id + "?no-cache=" + new Date().getTime()).subscribe(
             

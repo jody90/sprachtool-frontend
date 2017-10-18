@@ -26,7 +26,7 @@
                 Actions
             </th>
         </tr>
-        <tr *ngFor="let version of versions; let i = index">
+        <tr *ngFor="let version of versions | paginate: { itemsPerPage: 3, currentPage: p }; let i = index">
             <td class="number">
                 {{versions.length - i}}
             </td>
@@ -73,5 +73,11 @@
             </td>
         </tr>
     </table>
+   
+</div>
 
+<div class="pagination-container">
+    <div class="my-pagination-container margin-top-xl">
+        <pagination-controls (pageChange)="p = $event" autoHide="true" previousLabel="previous Page" nextLabel="next Page" maxSize="5" class="my-pagination"></pagination-controls>
+    </div>
 </div>

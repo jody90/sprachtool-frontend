@@ -9,7 +9,8 @@ export class TranslateLanguageService {
     constructor(private httpService: HttpService) {}
 
     allLanguagesEmitter = new EventEmitter(); 
-   
+
+    // TODO Cache in local Storage for a defined time
     getAllLanguages() {
         this.httpService.getData("/v1/languages").subscribe(
             data => {
@@ -19,6 +20,7 @@ export class TranslateLanguageService {
         ) 
     }
 
+    // TODO Clear Cache
     addLanguage(lang: string) {
         this.httpService.postData("/v1/language/" + lang, {language: lang}).subscribe(
             data => {
@@ -27,7 +29,8 @@ export class TranslateLanguageService {
             error => console.log(error)
         ) 
     }
-
+    
+    // TODO Clear Cache
     deleteLanguage(lang: string) {
         this.httpService.deleteData("/v1/language/" + lang).subscribe(
             data => {
