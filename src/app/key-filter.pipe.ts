@@ -5,6 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
     pure: false
 })
 export class KeyFilterPipe implements PipeTransform {
+
     transform(items: any[], args:string[]): any {
 
         var language:string = args[0];
@@ -20,22 +21,26 @@ export class KeyFilterPipe implements PipeTransform {
                 var tTrans = [];
 
                 var modifiedDe;
+                var valueDe;
                 var modifiedOther;
+                var valueOther
                 
                 for (let i in item.translations) {
                     
                     if (item.translations[i].language == "de") {
                         modifiedDe = item.translations[i].modifiedAt;
+                        // valueDe = item.translations[i].value;
                     }
 
                     if (item.translations[i].language == language) {
                         modifiedOther = item.translations[i].modifiedAt;
+                        valueOther = item.translations[i].value;
                     }
 
                     tTrans.push(item.translations[i].language);
                 }
                 
-                if (tTrans.indexOf(language) == -1 || modifiedDe > modifiedOther) {
+                if (tTrans.indexOf(language) == -1 || modifiedDe > modifiedOther || valueOther == "") {
                     return item;
                 }
             }
