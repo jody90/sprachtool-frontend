@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Rx';
 import { LogSerivce } from './../../services/log.serivce';
 import { ActivatedRoute, Router, CanDeactivate } from '@angular/router';
@@ -36,6 +37,7 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
     formSubscription: Subscription;
     keySubscription: Subscription;
     languagesSubscription: Subscription;
+    keyExistSubscription: Subscription;
 
     ngAfterViewInit() {
         if (this.form != undefined) {
@@ -45,8 +47,15 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
         }
     }
 
+    trimKey() {
+        if (this.keyModel.key) {
+            this.keyModel.key = this.keyModel.key.trim();
+        }
+    }
+
     formValueChanges(values) {
-        if (!this.form.pristine) {
+        if (this.form.dirty) {
+            this.saved = !this.form.dirty;
             this.formDirty = this.form.dirty;
         }
     }
@@ -61,7 +70,6 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
                     languages => this.possibleLanguages = this.translateLanguageService.getLanguagesForKey(data, languages).sort(),
                     error => console.log(error)
                 )
-                
             }
         )
         
@@ -73,7 +81,6 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
                     this.currentKeyId = params["id"];
                 }
                 catch (error) {
-                    // this.logSerivce.log(error);
                     this.router.navigate(['translations']);
                 }
             }
@@ -96,18 +103,50 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
     }
 
     saveKey(form: NgForm) {
+
         this.keyModel.modifiedAt = new Date().getTime();
 
-        if (this.currentKeyId == undefined) {
+        this.keyService.keyExist(this.keyModel.key);
+
+        var that = this;
+
+        this.keyExistSubscription = this.keyService.keyExistEmitter.subscribe(
+            (exist: boolean) => {
+
+                this.keyExistSubscription.unsubscribe();
+                
+                if (this.currentKeyId) {
+                    this.doSave("update");
+                    return;
+                }
+                    
+                if (exist) {
+                    if (confirm("This key already exists. Are you shure to overwrite this key?")) {
+                        this.doSave("add");
+                    }
+                }
+                else {
+                    this.doSave("add");
+                }
+
+            }
+        )
+    }
+
+    doSave(action: string) {
+        let tKey = this.keyModel.key;
+        if (action == "add") {
             this.keyService.addKey(this.keyModel);
         }
         else {
             this.keyService.updateKey(this.currentKeyId, this.keyModel);
         }
-
         this.saved = true;
-        // this.keyService.getAllKeys();
-        this.router.navigate(['translations', 'edit', this.keyModel.key]);
+        this.form.resetForm();
+        
+        this.router.navigate(['translations']).then(() =>
+            this.router.navigate(['translations', 'edit', tKey])
+        )
     }
 
     translationChanged(translationIndex: number) {
