@@ -14,6 +14,7 @@ export class VersionsComponent implements OnInit, OnDestroy {
 
     allVersionsSubscription: Subscription;
     versions: VersionModel[];
+    p: number = 1;
 
     ngOnInit() {
         
