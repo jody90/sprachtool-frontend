@@ -3,6 +3,9 @@
 # We label our stage as 'builder'
 FROM node:6 as builder
 
+ARG BUILD_SETTINGS
+RUN echo $BUILD_SETTINGS
+
 COPY package.json package-lock.json ./
 
 RUN npm set progress=false && npm config set depth 0 && npm cache clean --force
@@ -14,8 +17,10 @@ WORKDIR /ng-app
 
 COPY . .
 
+#RUN echo $BUILD_SETTINGS
+
 ## Build the angular app in production mode and store the artifacts in dist folder
-RUN $(npm bin)/ng build --prod --build-optimizer
+RUN $(npm bin)/ng build $BUILD_SETTINGS
 
 
 ### STAGE 2: Setup ###
