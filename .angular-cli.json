@@ -3,11 +3,6 @@
     "project": {
         "name": "sprachtool"
     },
-    "environments": {
-        "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts",
-        "qa": "environments/environment.qa.ts"
-    },
     "apps": [
         {
             "root": "src",
@@ -31,7 +26,8 @@
             "environmentSource": "environments/environment.ts",
             "environments": {
                 "dev": "environments/environment.ts",
-                "prod": "environments/environment.prod.ts"
+                "prod": "environments/environment.prod.ts",
+                "qa": "environments/environment.qa.ts"
             }
         }
     ],
