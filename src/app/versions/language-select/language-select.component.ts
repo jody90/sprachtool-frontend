@@ -26,19 +26,11 @@ export class LanguageSelectComponent implements OnInit, OnDestroy {
         this.translateLanguageService.getAllLanguages();
 
         this.allLanguagesSubscription = this.translateLanguageService.allLanguagesEmitter.subscribe(
-            data => this.languages = data
+            data => {
+                this.languages = data
+                this.language = this.languages.toString();
+            }
         )
-
-        // for (let i in this.keys) {
-        //     let translations = this.keys[i].translations;
-        //     for (let k in translations) {
-        //         if (this.languages.indexOf(translations[k].language) == -1) {
-        //             this.languages.push(translations[k].language);
-        //         }
-        //     }
-        // }
-        
-        this.language = this.languages.toString();
     }
 
     languageSelect(selectedLanguage: string) {
