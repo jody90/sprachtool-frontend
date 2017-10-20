@@ -4,9 +4,6 @@
 
     <table class="table table-hover">
         <tr>
-            <th class="number">
-                #
-            </th>
             <th class="title">
                 Title
             </th>
@@ -26,10 +23,7 @@
                 Actions
             </th>
         </tr>
-        <tr *ngFor="let version of versions | paginate: { itemsPerPage: 3, currentPage: p }; let i = index">
-            <td class="number">
-                {{versions.length - i}}
-            </td>
+        <tr *ngFor="let version of versions | paginate: { itemsPerPage: 3, currentPage: p }">
             <td class="title">
                 {{version.title}}
             </td>
