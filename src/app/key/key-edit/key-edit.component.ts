@@ -39,6 +39,8 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
     languagesSubscription: Subscription;
     keyExistSubscription: Subscription;
 
+    textareaValue: string;
+
     ngAfterViewInit() {
         if (this.form != undefined) {
             this.formSubscription = this.form.control.valueChanges.debounceTime(200).distinctUntilChanged().subscribe(values => {
@@ -149,8 +151,11 @@ export class KeyEditComponent implements OnInit, OnDestroy, ComponentCanDeactiva
         )
     }
 
-    translationChanged(translationIndex: number) {
-        this.keyModel.translations[translationIndex].modifiedAt = new Date().getTime();
+    translationInsert(translationIndex: number, newTranslation: string) {
+        if (this.keyModel.translations[translationIndex].value !== newTranslation) {
+            this.keyModel.translations[translationIndex].modifiedAt = new Date().getTime();
+            this.keyModel.translations[translationIndex].value = newTranslation;
+        }
     }
 
     needTranslationUpdate(language: string) {

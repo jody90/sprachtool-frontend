@@ -26,7 +26,7 @@
                                 <span class="glyphicon glyphicon-trash key-edit-remove-translation" aria-hidden="true" (click)="removeLanguage(translation.language)"></span>
                                 <span class="glyphicon glyphicon-check key-edit-check-translation" aria-hidden="true" *ngIf="needTranslationUpdate(translation.language)" (click)="checkTranslation(translation.language)"></span>
                             </label>
-                            <textarea rows="3" [name]="translation.language" class="form-control" [ngClass]="needTranslationUpdate(translation.language) ? 'need-update' : ''" [(ngModel)]="translation.value" (keyup)="translationChanged(tIndex)" placeholder="Übersetztung"></textarea>
+                            <textarea rows="3" [name]="translation.language" class="form-control" [ngClass]="needTranslationUpdate(translation.language) ? 'need-update' : ''" [ngModel]="translation.value" #textareaValue (keyup)="translationInsert(tIndex, textareaValue.value)" placeholder="Übersetztung"></textarea>
                         </div>
                     </div>
                 </div>
